@@ -1,0 +1,43 @@
+.box {
+  border: 1px solid #e6e8ec;
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+}
+.title {
+  margin: 0 0 10px;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.item {
+  border-top: 1px solid #eef2f7;
+  padding-top: 10px;
+}
+.item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.text {
+  margin: 6px 0 0;
+  color: #111827;
+}
+.stars {
+  color: #f59e0b;
+}
+.muted {
+  color: #e5e7eb;
+}
+.empty {
+  color: #6b7280;
+}

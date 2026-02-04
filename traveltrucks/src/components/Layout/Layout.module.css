@@ -1,0 +1,35 @@
+.header {
+  height: 72px;
+  background: #fff;
+  border-bottom: 1px solid #eaecf0;
+  display: flex;
+  align-items: center;
+}
+
+.inner {
+  width: 1184px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.link {
+  text-decoration: none;
+  color: #101828;
+  font-weight: 500;
+}
+
+.link.active {
+  color: #e44848; /* червоний як у макеті */
+}

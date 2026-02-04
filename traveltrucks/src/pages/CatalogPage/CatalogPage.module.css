@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.content {
+  display: grid;
+  gap: 16px;
+}
+
+.error {
+  color: crimson;
+}
