@@ -1,6 +1,6 @@
 .header {
   height: 72px;
-  background: #fff;
+  background: #f7f7f7;
   border-bottom: 1px solid #eaecf0;
   display: flex;
   align-items: center;
@@ -10,18 +10,21 @@
   width: 1184px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  /* align-items: center;
+  justify-content: space-between; */
+  
 }
 
 .brand {
   font-weight: 700;
   letter-spacing: -0.02em;
+  margin-right: 450px;
 }
 
 .nav {
   display: flex;
   gap: 24px;
+  
 }
 
 .link {
@@ -32,4 +35,8 @@
 
 .link.active {
   color: #e44848; /* червоний як у макеті */
+}
+
+.mainNoPad {
+  padding: 0; /* прибирає фіолетове зверху і бокові відступи */
 }

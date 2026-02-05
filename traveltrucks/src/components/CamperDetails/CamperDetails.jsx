@@ -1,7 +1,11 @@
+import { useMemo, useState } from "react";
 import { formatPrice } from "../../utils/formatPrice";
 import Reviews from "../Reviews/Reviews";
 import BookingForm from "../BookingForm/BookingForm";
 import css from "./CamperDetails.module.css";
+
+import { FaStar } from "react-icons/fa";
+import { MdOutlineMap } from "react-icons/md";
 
 const FEATURES = [
   "transmission",
@@ -20,62 +24,103 @@ const FEATURES = [
 const DETAILS = ["form", "length", "width", "height", "tank", "consumption"];
 
 export default function CamperDetails({ camper }) {
-  const images = camper?.gallery ?? [];
+  const [tab, setTab] = useState("features");
+
+  const images = useMemo(() => {
+    const g = Array.isArray(camper.gallery) ? camper.gallery : [];
+    return g.map((it) => it?.original || it?.thumb).filter(Boolean);
+  }, [camper.gallery]);
+
+  const reviewsCount = Array.isArray(camper.reviews)
+    ? camper.reviews.length
+    : 0;
 
   return (
     <div className={css.wrap}>
       <div className={css.header}>
-        <h2 className={css.title}>{camper?.name}</h2>
-        <div className={css.price}>€ {formatPrice(camper?.price)}</div>
-      </div>
+        <div>
+          <h2 className={css.title}>{camper.name}</h2>
 
-      <p className={css.location}>{camper?.location}</p>
+          <div className={css.metaRow}>
+            <span className={css.rating}>
+              <FaStar className={css.star} />
+              {camper.rating} ({reviewsCount} Reviews)
+            </span>
+
+            <span className={css.location}>
+              <MdOutlineMap className={css.mapIcon} />
+              {camper.location}
+            </span>
+          </div>
+        </div>
+
+        <div className={css.price}>€ {formatPrice(camper.price)}</div>
+      </div>
 
       <div className={css.gallery}>
         {images.length ? (
-          images.map((img, i) => {
-            const src = img?.original || img?.thumb; // <-- ВАЖЛИВО
-            return (
-              <img
-                key={img?.original || img?.thumb || i}
-                className={css.img}
-                src={src}
-                alt={`${camper?.name} ${i + 1}`}
-                loading="lazy"
-              />
-            );
-          })
+          images.map((src, i) => (
+            <img
+              key={src + i}
+              className={css.img}
+              src={src}
+              alt={`${camper.name} ${i + 1}`}
+              loading="lazy"
+            />
+          ))
         ) : (
           <div className={css.noimg}>No images</div>
         )}
       </div>
 
-      <p className={css.desc}>{camper?.description}</p>
+      <p className={css.desc}>{camper.description}</p>
+
+      {/* tabs */}
+      <div className={css.tabs}>
+        <button
+          type="button"
+          className={`${css.tab} ${tab === "features" ? css.tabActive : ""}`}
+          onClick={() => setTab("features")}
+        >
+          Features
+        </button>
+        <button
+          type="button"
+          className={`${css.tab} ${tab === "reviews" ? css.tabActive : ""}`}
+          onClick={() => setTab("reviews")}
+        >
+          Reviews
+        </button>
+      </div>
 
       <div className={css.grid}>
         <div className={css.card}>
-          <h3 className={css.h3}>Features</h3>
-          <ul className={css.ul}>
-            {FEATURES.filter((k) => camper?.[k]).map((k) => (
-              <li key={k} className={css.li}>
-                {k}: {String(camper[k])}
-              </li>
-            ))}
-          </ul>
+          {tab === "features" ? (
+            <>
+              <h3 className={css.h3}>Vehicle equipment</h3>
+              <ul className={css.ul}>
+                {FEATURES.filter((k) => camper[k]).map((k) => (
+                  <li key={k} className={css.li}>
+                    {k}: {String(camper[k])}
+                  </li>
+                ))}
+              </ul>
 
-          <h3 className={css.h3}>Details</h3>
-          <ul className={css.ul}>
-            {DETAILS.filter((k) => camper?.[k]).map((k) => (
-              <li key={k} className={css.li}>
-                {k}: {String(camper[k])}
-              </li>
-            ))}
-          </ul>
+              <h3 className={css.h3}>Vehicle details</h3>
+              <ul className={css.ul}>
+                {DETAILS.filter((k) => camper[k]).map((k) => (
+                  <li key={k} className={css.li}>
+                    {k}: {String(camper[k])}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <Reviews reviews={camper.reviews} />
+          )}
         </div>
 
         <div className={css.side}>
-          <Reviews reviews={camper?.reviews ?? []} />
-          <div className={css.spacer} />
           <BookingForm />
         </div>
       </div>

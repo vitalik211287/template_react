@@ -3,6 +3,9 @@
   grid-template-columns: 360px 1fr;
   gap: 32px;
   align-items: start;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 24px 0 64px;
 }
 
 .content {

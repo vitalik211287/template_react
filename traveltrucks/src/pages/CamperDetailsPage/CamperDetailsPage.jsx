@@ -26,7 +26,7 @@ export default function CamperDetailsPage() {
   }, [dispatch, id]);
 
   return (
-    <div>
+    <div className={"container"}>
       <Link to="/catalog">← Back to catalog</Link>
 
       {loading && <Loader />}

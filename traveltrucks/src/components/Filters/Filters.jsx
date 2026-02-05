@@ -9,17 +9,29 @@ import { resetResults } from "../../redux/campers/campersSlice";
 import css from "./Filters.module.css";
 
 const EQUIPMENT = [
-  { key: "AC", label: "AC", icon: "🌀" },
-  { key: "automatic", label: "Automatic", icon: "⚙️" }, // ✅ було transmission
-  { key: "kitchen", label: "Kitchen", icon: "☕" },
-  { key: "TV", label: "TV", icon: "🖥️" },
-  { key: "bathroom", label: "Bathroom", icon: "🚿" },
+  { key: "AC", label: "AC", icon: <img src="/wind.png" /> },
+  {
+    key: "automatic",
+    label: "Automatic",
+    icon: <img src="/diagram.png" />,
+  }, 
+  { key: "kitchen", label: "Kitchen", icon: <img src="/cup-hot.png" /> },
+  { key: "TV", label: "TV", icon: <img src="/tv.png" /> },
+  { key: "bathroom", label: "Bathroom", icon: <img src="/ph_shower.png" /> },
 ];
 
 const TYPES = [
-  { value: "panelTruck", label: "Van", icon: "🚐" },
-  { value: "fullyIntegrated", label: "Fully Integrated", icon: "🏠" },
-  { value: "alcove", label: "Alcove", icon: "⛺" },
+  { value: "panelTruck", label: "Van", icon: <img src="/bi_grid.png" /> },
+  {
+    value: "fullyIntegrated",
+    label: "Fully Integrated",
+    icon: <img src="/bi_grid-1x2.png" />,
+  },
+  {
+    value: "alcove",
+    label: "Alcove",
+    icon: <img src="/bi_grid-3x3-gap.png" />,
+  },
 ];
 
 export default function Filters() {

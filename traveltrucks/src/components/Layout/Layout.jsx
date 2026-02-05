@@ -30,7 +30,7 @@ export default function Layout() {
         </div>
       </header>
 
-      <main className="container">
+      <main >
         <Outlet />
       </main>
     </>
