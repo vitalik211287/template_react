@@ -3,6 +3,7 @@
   border-radius: 16px;
   padding: 44px 57px;
   background: var(--color-bg);
+  width: 588px;
 }
 .title {
   /* margin: 0 0 10px; */
