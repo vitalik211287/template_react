@@ -1,3 +1,4 @@
+// src/components/Filters/Filters.jsx
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLocation,
@@ -8,39 +9,39 @@ import {
 import { resetResults } from "../../redux/campers/campersSlice";
 import css from "./Filters.module.css";
 
-const EQUIPMENT = [
-  { key: "AC", label: "AC", icon: <img src="/wind.png" /> },
-  {
-    key: "automatic",
-    label: "Automatic",
-    icon: <img src="/diagram.png" />,
-  }, 
-  { key: "kitchen", label: "Kitchen", icon: <img src="/cup-hot.png" /> },
-  { key: "TV", label: "TV", icon: <img src="/tv.png" /> },
-  { key: "bathroom", label: "Bathroom", icon: <img src="/ph_shower.png" /> },
-];
+import { CAMPER_FIELDS, EQUIPMENT_ORDER } from "../../utils/camperSchema";
 
-const TYPES = [
-  { value: "panelTruck", label: "Van", icon: <img src="/bi_grid.png" /> },
+// Опції типу кемпера (це не “поле з бекенду”, а допустимі значення form)
+const FORM_OPTIONS = [
+  { value: "panelTruck", label: "Van", icon: "/bi_grid.png" },
   {
     value: "fullyIntegrated",
     label: "Fully Integrated",
-    icon: <img src="/bi_grid-1x2.png" />,
+    icon: "/bi_grid-1x2.png",
   },
-  {
-    value: "alcove",
-    label: "Alcove",
-    icon: <img src="/bi_grid-3x3-gap.png" />,
-  },
+  { value: "alcove", label: "Alcove", icon: "/bi_grid-3x3-gap.png" },
 ];
+
+// Будуємо equipment-плитки із camperSchema (жодного хардкоду ключів)
+const EQUIPMENT_TILES = EQUIPMENT_ORDER.map((key) => ({
+  key,
+  cfg: CAMPER_FIELDS[key],
+}))
+  .filter(({ cfg }) => cfg?.group === "equipment")
+  // engine тут краще не показувати як toggle, бо це не boolean (petrol/diesel/...)
+  .filter(({ key }) => key !== "engine")
+  .map(({ key, cfg }) => ({
+    key,
+    label: cfg.label,
+    icon: cfg.icon,
+  }));
 
 export default function Filters() {
   const dispatch = useDispatch();
   const filters = useSelector((s) => s.filters);
 
   const onSearch = () => {
-    dispatch(resetResults()); // скидаємо page = 1
-    // якщо фільтр локальний — більше нічого не треба
+    dispatch(resetResults());
     // якщо робитимеш запит на бекенд — тут викличеш fetchCampers(filters)
   };
 
@@ -73,7 +74,7 @@ export default function Filters() {
         <div className={css.divider} />
 
         <div className={css.tiles}>
-          {EQUIPMENT.map((it) => {
+          {EQUIPMENT_TILES.map((it) => {
             const active = Boolean(filters.features?.[it.key]);
 
             return (
@@ -83,7 +84,9 @@ export default function Filters() {
                 className={`${css.tile} ${active ? css.tileActive : ""}`}
                 onClick={() => dispatch(toggleFeature(it.key))}
               >
-                <span className={css.tileIcon}>{it.icon}</span>
+                <span className={css.tileIcon}>
+                  <img src={it.icon} alt={it.label} />
+                </span>
                 <span className={css.tileText}>{it.label}</span>
               </button>
             );
@@ -96,7 +99,7 @@ export default function Filters() {
         <div className={css.divider} />
 
         <div className={css.tiles}>
-          {TYPES.map((t) => {
+          {FORM_OPTIONS.map((t) => {
             const active = filters.form === t.value;
 
             return (
@@ -106,7 +109,9 @@ export default function Filters() {
                 className={`${css.tile} ${active ? css.tileActive : ""}`}
                 onClick={() => dispatch(setForm(active ? "" : t.value))}
               >
-                <span className={css.tileIcon}>{t.icon}</span>
+                <span className={css.tileIcon}>
+                  <img src={t.icon} alt={t.label} />
+                </span>
                 <span className={css.tileText}>{t.label}</span>
               </button>
             );

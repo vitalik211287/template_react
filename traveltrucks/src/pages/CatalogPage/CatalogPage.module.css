@@ -14,5 +14,5 @@
 }
 
 .error {
-  color: crimson;
+  color: var(--color-error);
 }

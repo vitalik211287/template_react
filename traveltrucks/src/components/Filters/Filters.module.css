@@ -10,14 +10,14 @@
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 
 .locationWrap {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #f3f4f6;
+  background: var(--color-bg-soft);
   border-radius: 12px;
   padding: 12px 14px;
 }
@@ -39,7 +39,7 @@
   margin-top: 18px;
   margin-bottom: 12px;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 
 .h3 {
@@ -61,8 +61,8 @@
 }
 
 .tile {
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
   border-radius: 12px;
   padding: 14px 10px;
   cursor: pointer;
@@ -81,7 +81,7 @@ height: 96px;
 }
 
 .tileActive {
-  border-color: #ef4444;
+  border-color: var(--color-primary);
   box-shadow: 0 6px 16px rgba(239, 68, 68, 0.12);
 }
 
@@ -103,14 +103,14 @@ height: 96px;
 
   border: none;
   border-radius: 999px;
-  background: #ef4444;
+  background: var(--color-primary);
   color: #fff;
   font-weight: 700;
   cursor: pointer;
 }
 
 .searchBtn:hover {
-  filter: brightness(0.95);
+  background: var(--color-primary-hover);
 }
 
 .resetBtn {
@@ -123,7 +123,19 @@ height: 96px;
   cursor: pointer;
 }
 
+.resetBtn:hover {
+   border-color: var(--color-primary); color: var(--color-primary);
+}   
+
+.resetBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+  color: #e5e7eb;
+}
+
 img {
   width: 32px;
   height: 32px;
 }
+

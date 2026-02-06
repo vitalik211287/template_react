@@ -1,10 +1,37 @@
+/* ===== Design Tokens ===== */
+/* src/index.css (або src/styles/variables.css) */
+:root {
+  /* Text */
+  --color-text-main: #101828;
+  --color-text-secondary: #475467;
+  --color-text-tertiary: #6c717b;
+
+  /* Primary (red) */
+  --color-primary: #e44848;
+  --color-primary-hover: #d84343;
+
+  /* Accent (yellow) */
+  --color-accent: #ffc531;
+
+  /* Borders */
+  --color-border: #dadde1;
+
+  /* Backgrounds */
+  --color-bg: #ffffff;
+  --color-bg-muted: #f2f4f7;
+  --color-bg-soft: #f7f7f7;
+}
+
+
+
+
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: #ffffff;
-  color: #101828;
+  background: var(--color-bg);
+  color: var(--color-text-main) ;
 }
 
 a { color: inherit; }
@@ -21,3 +48,32 @@ ul{
   margin: 0;
 }
 
+/* ===== CSS RESET (base) ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}

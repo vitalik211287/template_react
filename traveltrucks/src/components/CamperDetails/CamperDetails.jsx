@@ -7,21 +7,8 @@ import css from "./CamperDetails.module.css";
 import { FaStar } from "react-icons/fa";
 import { MdOutlineMap } from "react-icons/md";
 
-const FEATURES = [
-  "transmission",
-  "engine",
-  "AC",
-  "bathroom",
-  "kitchen",
-  "TV",
-  "radio",
-  "refrigerator",
-  "microwave",
-  "gas",
-  "water",
-];
-
-const DETAILS = ["form", "length", "width", "height", "tank", "consumption"];
+import CamperBadges from "../CamperFeatures/CamperBadges";
+import CamperSpecs from "../CamperFeatures/CamperSpecs";
 
 export default function CamperDetails({ camper }) {
   const [tab, setTab] = useState("features");
@@ -79,14 +66,15 @@ export default function CamperDetails({ camper }) {
       <div className={css.tabs}>
         <button
           type="button"
-          className={`${css.tab} ${tab === "features" ? css.tabActive : ""}`}
+          className={`${css.tab} ${tab === "features" ? css.active : ""}`}
           onClick={() => setTab("features")}
         >
           Features
         </button>
+
         <button
           type="button"
-          className={`${css.tab} ${tab === "reviews" ? css.tabActive : ""}`}
+          className={`${css.tab} ${tab === "reviews" ? css.active : ""}`}
           onClick={() => setTab("reviews")}
         >
           Reviews
@@ -97,23 +85,23 @@ export default function CamperDetails({ camper }) {
         <div className={css.card}>
           {tab === "features" ? (
             <>
-              <h3 className={css.h3}>Vehicle equipment</h3>
-              <ul className={css.ul}>
-                {FEATURES.filter((k) => camper[k]).map((k) => (
-                  <li key={k} className={css.li}>
-                    {k}: {String(camper[k])}
-                  </li>
-                ))}
-              </ul>
+              {/* ✅ ряд бейджів як у макеті */}
+              <div className={css.badgesRow}>
+                <CamperBadges camper={camper} />
+              </div>
 
-              <h3 className={css.h3}>Vehicle details</h3>
-              <ul className={css.ul}>
-                {DETAILS.filter((k) => camper[k]).map((k) => (
-                  <li key={k} className={css.li}>
-                    {k}: {String(camper[k])}
-                  </li>
-                ))}
-              </ul>
+              {/* ✅ 2 секції як у макеті */}
+              {/* <CamperSpecs
+                camper={camper}
+                group="equipment"
+                title="Vehicle equipment"
+              /> */}
+              <CamperSpecs
+                camper={camper}
+                group="details"
+                title="Vehicle details "
+                className={css.specs}
+              />
             </>
           ) : (
             <Reviews reviews={camper.reviews} />

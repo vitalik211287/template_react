@@ -4,18 +4,23 @@ import { toggleFavorite } from "../../redux/favorites/favoritesSlice";
 import { makeSelectIsFavorite } from "../../redux/favorites/favoritesSelectors";
 import { formatPrice } from "../../utils/formatPrice";
 import css from "./CamperCard.module.css";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+
+import { MdFavorite, MdFavoriteBorder, MdOutlinePlace } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import { MdOutlinePlace } from "react-icons/md";
-import { GiGearStickPattern } from "react-icons/gi";
-import { FaGasPump, FaSnowflake } from "react-icons/fa";
-import { MdOutlineKitchen } from "react-icons/md";
+
+import CamperBadges from "../CamperFeatures/CamperBadges";
 
 export default function CamperCard({ camper }) {
   const dispatch = useDispatch();
   const isFav = useSelector(makeSelectIsFavorite(camper.id));
 
-  const img = camper.gallery?.[0]?.thumb || camper.gallery?.[0]?.original || "";
+  const imgObj = camper.gallery?.[0];
+  const img =
+    (typeof imgObj === "string" ? imgObj : imgObj?.thumb || imgObj?.original) ||
+    "";
+
+  const rating = camper.rating ?? 0;
+  const reviewsCount = camper.reviews?.length ?? 0;
 
   return (
     <div className={css.card}>
@@ -43,6 +48,9 @@ export default function CamperCard({ camper }) {
               <button
                 className={css.fav}
                 type="button"
+                aria-label={
+                  isFav ? "Remove from favorites" : "Add to favorites"
+                }
                 onClick={() => dispatch(toggleFavorite(camper.id))}
               >
                 {isFav ? <MdFavorite /> : <MdFavoriteBorder />}
@@ -53,49 +61,19 @@ export default function CamperCard({ camper }) {
           <div className={css.ratingRow}>
             <span className={css.rating}>
               <FaStar className={css.star} />
-              {camper.rating}
-              <span className={css.reviews}>
-                ({camper.reviews?.length || 0} Reviews)
-              </span>
+              {rating}
+              <span className={css.reviews}>({reviewsCount} Reviews)</span>
             </span>
 
             <span className={css.locationRow}>
-              <MdOutlinePlace />
+              <MdOutlinePlace className={css.place} />
               {camper.location}
             </span>
           </div>
 
-          <div className={css.features}>
-            {camper.transmission === "automatic" && (
-              <span className={css.feature}>
-                <img
-                  className={css.icon}
-                  src="/diagram.png"
-                  alt="Automatic transmission"
-                />{" "}
-                Automatic
-              </span>
-            )}
-
-            {camper.engine && (
-              <span className={css.feature}>
-                <img className={css.icon} src="/Petrol.png" alt="Engine" />{" "}
-                {camper.engine}
-              </span>
-            )}
-
-            {camper.kitchen && (
-              <span className={css.feature}>
-                <img className={css.icon} src="/cup-hot.png" alt="Kitchen" />{" "}
-                Kitchen
-              </span>
-            )}
-
-            {camper.AC && (
-              <span className={css.feature}>
-                <img className={css.icon} src="/wind.png" alt="AC" /> AC
-              </span>
-            )}
+          {/* Плашки (один раз) */}
+          <div className={css.badgesRow}>
+            <CamperBadges camper={camper} />
           </div>
 
           <p className={css.desc}>{camper.description}</p>

@@ -81,14 +81,16 @@
   align-items: center;
   justify-content: center;
   padding: 0 18px;
-  background: #e44848;
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-bg);
   border-radius: 200px;
   text-decoration: none;
   font-weight: 600;
 }
 
-.more:hover { opacity: 0.95; }
+.more:hover { 
+  background: var(--color-primary-hover);
+}
 
 .features {
   display: flex;
@@ -104,10 +106,10 @@
   padding: auto;
   padding: 14px 18px;
   border-radius: 100px;
-  background: #f2f4f7;
+  background: var(--color-bg-soft);
   font-size: 16px;
   font-weight: 500;
-  line-height: 1,5;
+  line-height: 1.5;
 }
 
 .icon {
@@ -132,7 +134,7 @@
 }
 
 .star {
-  color: #ffc531;
+  color: var(--color-accent);
 }
 
 .reviews {
