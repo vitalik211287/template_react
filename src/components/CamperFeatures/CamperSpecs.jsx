@@ -8,7 +8,12 @@ export default function CamperSpecs({ camper, group, title }) {
 
   return (
     <>
-      {title && <h3 className={css.h3}>{title}</h3>}
+      {title && (
+        <>
+          <h3 className={css.h3}>{title}</h3>
+          <div className={css.divider} />
+        </>
+      )}
 
       <ul className={css.ul}>
         {items.map((it) => (

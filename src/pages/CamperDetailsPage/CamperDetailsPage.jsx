@@ -27,7 +27,7 @@ export default function CamperDetailsPage() {
 
   return (
     <div className={"container"}>
-      <Link to="/catalog">← Back to catalog</Link>
+      {/* <Link to="/catalog">← Back to catalog</Link> */}
 
       {loading && <Loader />}
       {error && <p style={{ color: "crimson" }}>Error: {error}</p>}

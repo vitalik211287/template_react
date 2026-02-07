@@ -39,7 +39,8 @@ a { color: inherit; }
 .container {
   width: 1184px;        
   margin: 0 auto;
-  padding: 24px 0 64px;
+  padding: 48px 64px;
+  background-color: #fff;
 }
 
 ul{

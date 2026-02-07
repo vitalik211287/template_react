@@ -25,7 +25,7 @@ export default function CamperDetails({ camper }) {
   return (
     <div className={css.wrap}>
       <div className={css.header}>
-        <div>
+        <div className={css.head}>
           <h2 className={css.title}>{camper.name}</h2>
 
           <div className={css.metaRow}>
@@ -85,23 +85,18 @@ export default function CamperDetails({ camper }) {
         <div className={css.card}>
           {tab === "features" ? (
             <>
-              {/* ✅ ряд бейджів як у макеті */}
+              {/*  ряд бейджів як у макеті */}
               <div className={css.badgesRow}>
                 <CamperBadges camper={camper} />
               </div>
-
-              {/* ✅ 2 секції як у макеті */}
-              {/* <CamperSpecs
-                camper={camper}
-                group="equipment"
-                title="Vehicle equipment"
-              /> */}
-              <CamperSpecs
+              
+              <CamperSpecs  
                 camper={camper}
                 group="details"
                 title="Vehicle details "
                 className={css.specs}
               />
+              
             </>
           ) : (
             <Reviews reviews={camper.reviews} />
