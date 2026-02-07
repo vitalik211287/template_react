@@ -7,22 +7,55 @@ export default function BookingForm() {
   const [date, setDate] = useState(""); // YYYY-MM-DD
   const [comment, setComment] = useState("");
   const [ok, setOk] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const dateRef = useRef(null);
 
   const openDatePicker = () => {
-    // Chrome/Edge
     if (dateRef.current?.showPicker) {
       dateRef.current.showPicker();
       return;
     }
-    // fallback (Firefox): фокус/клік по інпуту
     dateRef.current?.focus();
     dateRef.current?.click();
   };
 
+  const validate = () => {
+    const e = {};
+
+    if (name.trim().length < 2) {
+      e.name = "Please enter your name";
+    }
+
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length < 10) {
+      e.phone = "Please enter a valid phone number";
+    }
+
+    if (!date) {
+      e.date = "Please select a booking date";
+    } else {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const selected = new Date(date);
+      if (selected < today) {
+        e.date = "Date cannot be in the past";
+      }
+    }
+
+    return e;
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
     setOk(true);
     setTimeout(() => setOk(false), 2500);
 
@@ -41,24 +74,26 @@ export default function BookingForm() {
         Stay connected! We are always ready to help you.
       </p>
 
-      <form className={css.form} onSubmit={onSubmit}>
+      <form className={css.form} onSubmit={onSubmit} noValidate>
+        {/* Name */}
         <input
-          className={css.input}
+          className={`${css.input} ${errors.name ? css.invalid : ""}`}
           placeholder="Name*"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
         />
+        {errors.name && <p className={css.error}>{errors.name}</p>}
 
+        {/* Phone */}
         <input
-          className={css.input}
+          className={`${css.input} ${errors.phone ? css.invalid : ""}`}
           placeholder="Phone*"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          required
         />
+        {errors.phone && <p className={css.error}>{errors.phone}</p>}
 
-        {/* Date field: клік будь-де відкриває календар */}
+        {/* Date */}
         <div
           className={css.dateField}
           role="button"
@@ -69,29 +104,25 @@ export default function BookingForm() {
           }}
         >
           <input
-            className={css.input}
+            className={`${css.input} ${errors.date ? css.invalid : ""}`}
             type="text"
             placeholder="Booking date*"
             value={prettyDate}
             readOnly
           />
-{/* 
-          <span className={css.dateIcon} aria-hidden="true">
-            📅
-          </span> */}
 
-          {/* Справжнє поле дати (приховане) */}
           <input
             ref={dateRef}
             className={css.dateNative}
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            required
             aria-label="Booking date"
           />
         </div>
+        {errors.date && <p className={css.error}>{errors.date}</p>}
 
+        {/* Comment */}
         <textarea
           className={css.textarea}
           placeholder="Comment"

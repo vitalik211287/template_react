@@ -102,3 +102,12 @@
   border-color: var(--color-primary);
   box-shadow: none; /* або залиш, якщо хочеш м’який ефект */
 }
+.error {
+  color: #d92d20;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.invalid {
+  border-color: #d92d20;
+}
