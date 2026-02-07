@@ -1,8 +1,11 @@
 .box {
-  border: 1px solid #e6e8ec;
+  /* position: relative; */
+  /* border: 1px solid #e6e8ec; */
   border-radius: 16px;
-  padding: 14px;
-  background: #fff;
+  width: 588px;
+  /* min-height: ;
+  height: 100%; */
+  /* background: red; */
 }
 .title {
   margin: 0 0 10px;
@@ -12,21 +15,46 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  /* gap: 10px; */
+  margin-top: 32px;
 }
 .item {
-  border-top: 1px solid #eef2f7;
-  padding-top: 10px;
+  /* border-top: 1px solid #eef2f7; */
+  /* padding-top: 10px; */
+  margin-bottom: 44px;
 }
 .item:first-child {
   border-top: none;
   padding-top: 0;
 }
+
 .head {
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
   align-items: center;
-  gap: 10px;
+  /* gap: 4px; */
+  /* margin-left: 76px; */
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--color-bg-muted);
+  border-radius: 30px;
+  background-color: var(--color-bg-muted);
+  padding: 10px;
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-right: 16px;
+}
+.meta {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  /* gap: 4px; */
 }
 .text {
   margin: 6px 0 0;

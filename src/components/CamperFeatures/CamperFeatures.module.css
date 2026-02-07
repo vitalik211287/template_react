@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
   /* background-color:red; */
 }
 
@@ -24,7 +24,7 @@
   object-fit: contain;
 }
 .h3 {
-  margin: 0 0 16px;
+  margin: 100px 0 16px;
   font-size: 20px;
   font-weight: 600;
   color: var(--color-text-main);

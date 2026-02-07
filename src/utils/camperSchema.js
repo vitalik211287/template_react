@@ -1,13 +1,3 @@
-// src/utils/camperSchema.js
-
-// 1) ЄДИНЕ місце, де ми описуємо всі поля з бекенду:
-// - label (людська назва)
-// - group: "equipment" | "details"
-// - icon (якщо треба для pills)
-// - asBadge: чи показувати в pills
-// - show: умова показу
-// - value: як отримати/перетворити значення
-
 export const CAMPER_FIELDS = {
   transmission: {
     label: "Automatic",
@@ -57,7 +47,7 @@ export const CAMPER_FIELDS = {
   bathroom: {
     label: "Bathroom",
     group: "equipment",
-    asBadge: false,
+    asBadge: true,
     icon: "/ph_shower.png",
     show: (c) => Boolean(c.bathroom),
     value: () => "Bathroom",
@@ -198,3 +188,29 @@ export const getSpecItems = (camper, group) => {
       value: cfg.value(camper),
     }));
 };
+
+// ✅ Мінімально: ключі, які реально можна тоглити як boolean у Filters
+// engine — не boolean (petrol/diesel/...), transmission теж краще окремо (automatic)
+export const FILTER_FEATURE_KEYS = EQUIPMENT_ORDER
+  .filter((key) => CAMPER_FIELDS[key]?.group === "equipment")
+  .filter((key) => !["engine", "transmission"].includes(key));
+
+  // src/utils/camperSchema.js
+
+export const FORM_OPTIONS = [
+  {
+    value: "panelTruck",
+    label: "Van",
+    icon: "/bi_grid.png",
+  },
+  {
+    value: "fullyIntegrated",
+    label: "Fully Integrated",
+    icon: "/bi_grid-1x2.png",
+  },
+  {
+    value: "alcove",
+    label: "Alcove",
+    icon: "/bi_grid-3x3-gap.png",
+  },
+];

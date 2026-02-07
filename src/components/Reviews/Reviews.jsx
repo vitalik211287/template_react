@@ -16,13 +16,19 @@ export default function Reviews({ reviews = [] }) {
 
   return (
     <div className={css.box}>
-      <h3 className={css.title}>Reviews</h3>
+      {/* <h3 className={css.title}>Reviews</h3> */}
+
       <ul className={css.list}>
         {reviews.map((r, idx) => (
           <li key={idx} className={css.item}>
             <div className={css.head}>
-              <strong>{r.reviewer_name || "Anonymous"}</strong>
-              <Stars value={r.reviewer_rating} />
+              <span className={css.avatar}>
+                {r.reviewer_name?.charAt(0)?.toUpperCase() || "A"}
+              </span>
+              <div className={css.meta}>
+                <strong>{r.reviewer_name || "Anonymous"}</strong>
+                <Stars value={r.reviewer_rating} />
+              </div>
             </div>
             <p className={css.text}>{r.comment}</p>
           </li>

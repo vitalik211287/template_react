@@ -8,27 +8,21 @@ import {
 } from "../../redux/filters/filtersSlice";
 import { resetResults } from "../../redux/campers/campersSlice";
 import css from "./Filters.module.css";
+import { MdOutlineMap } from "react-icons/md";
 
-import { CAMPER_FIELDS, EQUIPMENT_ORDER } from "../../utils/camperSchema";
+import {
+  CAMPER_FIELDS,
+  EQUIPMENT_ORDER,
+  FORM_OPTIONS,
+} from "../../utils/camperSchema";
 
-// Опції типу кемпера (це не “поле з бекенду”, а допустимі значення form)
-const FORM_OPTIONS = [
-  { value: "panelTruck", label: "Van", icon: "/bi_grid.png" },
-  {
-    value: "fullyIntegrated",
-    label: "Fully Integrated",
-    icon: "/bi_grid-1x2.png",
-  },
-  { value: "alcove", label: "Alcove", icon: "/bi_grid-3x3-gap.png" },
-];
-
-// Будуємо equipment-плитки із camperSchema (жодного хардкоду ключів)
+// Будуємо equipment-плитки із camperSchema
 const EQUIPMENT_TILES = EQUIPMENT_ORDER.map((key) => ({
   key,
   cfg: CAMPER_FIELDS[key],
 }))
   .filter(({ cfg }) => cfg?.group === "equipment")
-  // engine тут краще не показувати як toggle, бо це не boolean (petrol/diesel/...)
+  // engine не робимо toggle, бо це строка (petrol/diesel/hybrid)
   .filter(({ key }) => key !== "engine")
   .map(({ key, cfg }) => ({
     key,
@@ -41,8 +35,8 @@ export default function Filters() {
   const filters = useSelector((s) => s.filters);
 
   const onSearch = () => {
-    dispatch(resetResults());
-    // якщо робитимеш запит на бекенд — тут викличеш fetchCampers(filters)
+    dispatch(resetResults()); // скидаємо page=1 (по ТЗ)
+    // якщо захочеш робити запит на бекенд з фільтрами — викличеш тут fetchCampers(filters)
   };
 
   const onReset = () => {
@@ -56,7 +50,9 @@ export default function Filters() {
         <label className={css.label}>Location</label>
 
         <div className={css.locationWrap}>
-          <span className={css.locationIcon}>📍</span>
+          <span className={css.locationIcon}>
+            <MdOutlineMap className={css.icon} />
+          </span>
           <input
             className={css.input}
             type="text"
@@ -93,7 +89,7 @@ export default function Filters() {
           })}
         </div>
 
-        <h3 className={css.h3} style={{ marginTop: 20 }}>
+        <h3 className={css.h3} style={{ marginTop: 32 }}>
           Vehicle type
         </h3>
         <div className={css.divider} />

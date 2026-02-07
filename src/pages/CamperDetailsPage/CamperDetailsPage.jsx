@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader/Loader";
 import CamperDetails from "../../components/CamperDetails/CamperDetails";
@@ -26,12 +26,14 @@ export default function CamperDetailsPage() {
   }, [dispatch, id]);
 
   return (
-    <div className={"container"}>
-      {/* <Link to="/catalog">← Back to catalog</Link> */}
+    <div className="container">
+      {loading && <Loader overlay />}
 
-      {loading && <Loader />}
-      {error && <p style={{ color: "crimson" }}>Error: {error}</p>}
-      {camper && <CamperDetails camper={camper} />}
+      {error && !loading && (
+        <p style={{ color: "crimson", textAlign: "center" }}>Error: {error}</p>
+      )}
+
+      {!loading && camper && <CamperDetails camper={camper} />}
     </div>
   );
 }

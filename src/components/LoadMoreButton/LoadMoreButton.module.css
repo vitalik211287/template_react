@@ -9,5 +9,5 @@
   cursor: pointer;
 }
 
-.btn:hover { border-color: #e44848; color: #e44848; }
+.btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
 .btn:disabled { opacity: 0.6; cursor: not-allowed; }

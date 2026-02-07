@@ -5,7 +5,12 @@ import { makeSelectIsFavorite } from "../../redux/favorites/favoritesSelectors";
 import { formatPrice } from "../../utils/formatPrice";
 import css from "./CamperCard.module.css";
 
-import { MdFavorite, MdFavoriteBorder, MdOutlinePlace } from "react-icons/md";
+import {
+  MdFavorite,
+  MdFavoriteBorder,
+  MdOutlinePlace,
+  MdOutlineMap,
+} from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 
 import CamperBadges from "../CamperFeatures/CamperBadges";
@@ -66,7 +71,7 @@ export default function CamperCard({ camper }) {
             </span>
 
             <span className={css.locationRow}>
-              <MdOutlinePlace className={css.place} />
+              <MdOutlineMap className={css.place} />
               {camper.location}
             </span>
           </div>

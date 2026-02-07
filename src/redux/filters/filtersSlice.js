@@ -1,19 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { EQUIPMENT_ORDER } from "../../utils/camperSchema";
+
+const featuresInitial = Object.fromEntries(
+  EQUIPMENT_ORDER.map((k) => [k, false]),
+);
 
 const initialState = {
   location: "",
-  form: "", // наприклад: "panelTruck", "fullyIntegrated", "alcove" (що прийде з API)
-  features: {
-    AC: false,
-    bathroom: false,
-    kitchen: false,
-    TV: false,
-    radio: false,
-    refrigerator: false,
-    microwave: false,
-    gas: false,
-    water: false,
-  },
+  form: "", // "panelTruck", "fullyIntegrated", "alcove"
+  features: featuresInitial,
 };
 
 const filtersSlice = createSlice({
@@ -28,7 +23,10 @@ const filtersSlice = createSlice({
     },
     toggleFeature(state, action) {
       const key = action.payload;
-      state.features[key] = !state.features[key];
+      // ✅ захист: не додаємо випадкові ключі типу "automatic"
+      if (key in state.features) {
+        state.features[key] = !state.features[key];
+      }
     },
     resetFilters() {
       return initialState;

@@ -6,6 +6,7 @@ import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import Loader from "../../components/Loader/Loader";
 import css from "./CatalogPage.module.css";
 
+
 import { fetchCampers } from "../../redux/campers/campersOps";
 import { loadMore } from "../../redux/campers/campersSlice";
 import {
@@ -35,7 +36,7 @@ export default function CatalogPage() {
       <Filters />
 
       <div className={css.content}>
-        {loading && <Loader />}
+        {loading && <Loader overlay />}
         {error && <p className={css.error}>Error: {error}</p>}
 
         <CamperList campers={campers} />
@@ -44,9 +45,7 @@ export default function CatalogPage() {
           <LoadMoreButton
             onClick={() => dispatch(loadMore())}
             disabled={loading}
-          >
-            Load more
-          </LoadMoreButton>
+          />
         )}
       </div>
     </div>
