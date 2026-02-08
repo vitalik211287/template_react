@@ -131,7 +131,7 @@ npm run lint
 ---
 ### 🌐 Live demo
 
-https://vercel.com/vitalik211287s-projects/template-react/6nzMbx3grRUzV5TdoxsXjY5sSpLs
+https://template-react-git-main-vitalik211287s-projects.vercel.app/
 ## 👤 Автор
 
 **Vitalii Poliakov**
