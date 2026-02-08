@@ -15,13 +15,12 @@ import {
   FORM_OPTIONS,
 } from "../../utils/camperSchema";
 
-// Будуємо equipment-плитки із camperSchema
 const EQUIPMENT_TILES = EQUIPMENT_ORDER.map((key) => ({
   key,
   cfg: CAMPER_FIELDS[key],
 }))
   .filter(({ cfg }) => cfg?.group === "equipment")
- 
+
   .filter(({ key }) => key !== "engine")
   .map(({ key, cfg }) => ({
     key,
@@ -33,29 +32,25 @@ export default function Filters() {
   const dispatch = useDispatch();
   const filters = useSelector((s) => s.filters);
 
- const LIMIT = 4;
+  const LIMIT = 4;
 
- const onSearch = () => {
-   dispatch(resetResults());
-   dispatch(fetchCampers({ filters, page: 1, limit: LIMIT }));
- };
+  const onSearch = () => {
+    dispatch(resetResults());
+    dispatch(fetchCampers({ filters, page: 1, limit: LIMIT }));
+  };
 
- const onReset = () => {
-   dispatch(resetFilters());
-   dispatch(resetResults());
+  const onReset = () => {
+    dispatch(resetFilters());
+    dispatch(resetResults());
 
-   // важливо: після resetFilters локальна змінна `filters` ще стара
-   // тому або передати порожні значення вручну:
-   dispatch(
-     fetchCampers({
-       filters: { location: "", form: "", features: {} },
-       page: 1,
-       limit: LIMIT,
-     }),
-   );
- };
-
-
+    dispatch(
+      fetchCampers({
+        filters: { location: "", form: "", features: {} },
+        page: 1,
+        limit: LIMIT,
+      }),
+    );
+  };
 
   return (
     <aside className={css.aside}>

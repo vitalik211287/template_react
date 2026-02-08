@@ -9,7 +9,6 @@ export default function Layout() {
     <>
       <header className={`${css.header} ${css.container}`}>
         <div className={css.inner}>
-          {/* ЛОГО → Home */}
           <NavLink to="/" end className={css.brand}>
             TravelTrucks
           </NavLink>

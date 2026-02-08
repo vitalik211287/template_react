@@ -14,7 +14,6 @@ import { MdOutlineMap } from "react-icons/md";
 export default function CamperDetails({ camper }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // ✅ таб з URL: /catalog/:id?tab=reviews
   const tab = searchParams.get("tab") || "features";
 
   const setTab = (nextTab) => {
@@ -23,12 +22,14 @@ export default function CamperDetails({ camper }) {
     setSearchParams(next);
   };
 
- const images = useMemo(() => {
+  const images = useMemo(() => {
     const g = Array.isArray(camper.gallery) ? camper.gallery : [];
     return g.map((it) => it?.original || it?.thumb).filter(Boolean);
   }, [camper.gallery]);
 
-  const reviewsCount = Array.isArray(camper?.reviews) ? camper.reviews.length : 0;
+  const reviewsCount = Array.isArray(camper?.reviews)
+    ? camper.reviews.length
+    : 0;
 
   return (
     <div className={css.wrap}>
@@ -70,7 +71,6 @@ export default function CamperDetails({ camper }) {
 
       <p className={css.desc}>{camper?.description}</p>
 
-      {/* ✅ Tabs (кнопки ок, бо це UI переключення; виглядатимуть як у макеті через CSS) */}
       <div className={css.tabs}>
         <button
           type="button"
@@ -93,17 +93,9 @@ export default function CamperDetails({ camper }) {
         <div>
           {tab === "features" && (
             <div className={css.card}>
-              {/* ряд бейджів */}
               <div className={css.badgesRow}>
                 <CamperBadges camper={camper} />
               </div>
-
-              {/* якщо хочеш 2 секції як у макеті — розкоментуй equipment
-              <CamperSpecs
-                camper={camper}
-                group="equipment"
-                title="Vehicle equipment"
-              /> */}
 
               <CamperSpecs
                 camper={camper}

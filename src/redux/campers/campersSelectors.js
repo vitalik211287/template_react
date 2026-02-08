@@ -23,7 +23,7 @@ export const selectCampersPage = (s) => s.campers.page;
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../api/axios";
 
-// helper: прибрати порожні значення
+
 const clean = (obj) =>
   Object.fromEntries(
     Object.entries(obj).filter(
@@ -39,7 +39,7 @@ export const fetchCampers = createAsyncThunk(
         page,
         limit,
 
-        // якщо API підтримує — передаємо:
+    
         location: filters?.location?.trim(),
         form: filters?.form || undefined,
       });
@@ -49,7 +49,7 @@ export const fetchCampers = createAsyncThunk(
       const data = res.data;
       const items = Array.isArray(data) ? data : (data?.items ?? []);
 
-      // Якщо хочеш: клієнтська фільтрація по equipment (безпечний варіант)
+
       const equipment = filters?.equipment || {};
       const activeEq = Object.entries(equipment)
         .filter(([, val]) => val)
@@ -78,7 +78,7 @@ export const fetchCamperById = createAsyncThunk(
     }
   },
 );
-// фільтрація по вимогах (location, form, features)
+
 export const selectFilteredCampers = createSelector(
   [selectCampers, selectFilters],
   (campers, filters) => {
@@ -121,13 +121,3 @@ export const selectFilteredCampers = createSelector(
   },
 );
 
-// пагінація (Load more) поверх відфільтрованих
-// export const selectVisibleCampers = createSelector(
-//   [selectFilteredCampers, selectPage, selectLimit],
-//   (filtered, page, limit) => filtered.slice(0, page * limit),
-// );
-
-// export const selectHasMore = createSelector(
-//   [selectFilteredCampers, selectVisibleCampers],
-//   (filtered, visible) => visible.length < filtered.length,
-// );

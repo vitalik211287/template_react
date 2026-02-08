@@ -14,7 +14,7 @@ export const CAMPER_FIELDS = {
     asBadge: true,
     icon: "/Petrol.png",
     show: (c) => Boolean(c.engine),
-    value: (c) => c.engine, // petrol/diesel/hybrid
+    value: (c) => c.engine,
   },
 
   AC: {
@@ -103,7 +103,7 @@ export const CAMPER_FIELDS = {
     label: "Form",
     group: "details",
     show: (c) => Boolean(c.form),
-    value: (c) => c.form, // panelTruck / alcove / fullyIntegrated
+    value: (c) => c.form,
   },
 
   length: {
@@ -142,7 +142,6 @@ export const CAMPER_FIELDS = {
   },
 };
 
-// Порядок, як у макеті/логіці (важливо, щоб UI був стабільний)
 export const EQUIPMENT_ORDER = [
   "automatic",
   "engine",
@@ -189,13 +188,9 @@ export const getSpecItems = (camper, group) => {
     }));
 };
 
-// ✅ Мінімально: ключі, які реально можна тоглити як boolean у Filters
-// engine — не boolean (petrol/diesel/...), transmission теж краще окремо (automatic)
-export const FILTER_FEATURE_KEYS = EQUIPMENT_ORDER
-  .filter((key) => CAMPER_FIELDS[key]?.group === "equipment")
-  .filter((key) => !["engine", "transmission"].includes(key));
-
-  // src/utils/camperSchema.js
+export const FILTER_FEATURE_KEYS = EQUIPMENT_ORDER.filter(
+  (key) => CAMPER_FIELDS[key]?.group === "equipment",
+).filter((key) => !["engine", "transmission"].includes(key));
 
 export const FORM_OPTIONS = [
   {
