@@ -127,9 +127,11 @@ npm run lint
 
 Проєкт підготовлений до деплою та коректно працює на платформах **Vercel** або **Netlify**.  
 Маршрутизація та асинхронні запити працюють коректно у production-версії.
-https://vercel.com/vitalik211287s-projects/template-react/6nzMbx3grRUzV5TdoxsXjY5sSpLs
----
 
+---
+### 🌐 Live demo
+
+https://vercel.com/vitalik211287s-projects/template-react/6nzMbx3grRUzV5TdoxsXjY5sSpLs
 ## 👤 Автор
 
 **Vitalii Poliakov**

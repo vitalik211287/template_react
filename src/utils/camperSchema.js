@@ -1,11 +1,14 @@
 export const CAMPER_FIELDS = {
-  automatic: {
-    label: "Automatic",
+  transmission: {
+    label: "Automatic", // для кнопки/бейджа
     group: "equipment",
-    asBadge: true,
+    asBadge: true, // якщо хочеш показувати в бейджах
     icon: "/diagram.png",
-    show: (c) => c.transmission === "automatic",
-    value: () => "Automatic",
+    show: (c) => Boolean(c.transmission),
+    value: (c) =>
+      String(c.transmission).toLowerCase() === "automatic"
+        ? "Automatic"
+        : "Manual",
   },
 
   engine: {
@@ -143,7 +146,7 @@ export const CAMPER_FIELDS = {
 };
 
 export const EQUIPMENT_ORDER = [
-  "automatic",
+  "transmission",
   "engine",
   "kitchen",
   "AC",
@@ -190,7 +193,7 @@ export const getSpecItems = (camper, group) => {
 
 export const FILTER_FEATURE_KEYS = EQUIPMENT_ORDER.filter(
   (key) => CAMPER_FIELDS[key]?.group === "equipment",
-).filter((key) => !["engine", "transmission"].includes(key));
+).filter((key) => !["engine"].includes(key));
 
 export const FORM_OPTIONS = [
   {

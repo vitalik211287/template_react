@@ -18,11 +18,19 @@ export const fetchCampers = createAsyncThunk(
       const { location, form, features } = stateFilters;
 
      
-      const featureParams = Object.fromEntries(
-        Object.entries(features || {})
-          .filter(([, val]) => val === true)
-          .map(([key]) => [key, true]),
-      );
+      const featureParams = {};
+
+      Object.entries(features || {}).forEach(([key, val]) => {
+        if (!val) return;
+
+        if (key === "transmission") {
+          //  Automatic
+          featureParams.transmission = "automatic";
+        } else {
+          //  Kitchen, AC, TV, etc.
+          featureParams[key] = true;
+        }
+      });
 
       const params = clean({
         page,
