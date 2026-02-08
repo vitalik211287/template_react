@@ -1,16 +1,63 @@
-# React + Vite
+# TravelTrucks — Camper Rental (React + Redux)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Фронтенд веб-додатку для компанії **TravelTrucks**, яка займається орендою кемперів.  
+Проєкт містить 3 сторінки: **Home**, **Catalog**, **Camper details** з відгуками та формою бронювання.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Функціонал
 
-## React Compiler
+- **Home**: банер + кнопка переходу в каталог.
+- **Catalog**:
+  - список кемперів
+  - фільтрація за локацією, типом кузова та обраним обладнанням
+  - додавання/видалення з **Favorites** (збереження між перезавантаженнями через localStorage)
+  - **Load more** — довантаження карток
+- **Camper details**:
+  - галерея фото
+  - вкладки з характеристиками та відгуками
+  - форма бронювання з нотифікацією про успішну відправку
+- Під час асинхронних запитів показується **Loader**
+- Маршрутизація через **React Router**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧰 Технології
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Vite + React**
+- **Redux Toolkit** + `react-redux`
+- **React Router**
+- **Axios**
+- **CSS Modules**
+- `react-icons`
+
+---
+
+## 🔌 API
+
+Використовується готовий бекенд:
+
+- `GET /campers` — отримати список кемперів
+- `GET /campers/:id` — отримати дані одного кемпера
+
+Базова адреса API:  
+`https://66b1f8e71ca8ad33d4f5f63e.mockapi.io`
+
+> У проєкті запити виконуються через Axios  (окремий інстанс з `baseURL`).
+
+---------
+
+## 🗺️ Маршрути
+
+- `/` — Home
+- `/catalog` — Catalog
+- `/catalog/:id` — Camper details
+
+---
+
+## ▶️ Як запустити локально
+
+### 1) Клонувати репозиторій
+```bash
+git clone <YOUR_REPO_LINK>
+cd <PROJECT_FOLDER>
