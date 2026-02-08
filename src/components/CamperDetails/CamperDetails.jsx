@@ -14,6 +14,7 @@ import { MdOutlineMap } from "react-icons/md";
 export default function CamperDetails({ camper }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
+
   const tab = searchParams.get("tab") || "features";
 
   const setTab = (nextTab) => {
@@ -22,14 +23,12 @@ export default function CamperDetails({ camper }) {
     setSearchParams(next);
   };
 
-  const images = useMemo(() => {
+ const images = useMemo(() => {
     const g = Array.isArray(camper.gallery) ? camper.gallery : [];
     return g.map((it) => it?.original || it?.thumb).filter(Boolean);
   }, [camper.gallery]);
 
-  const reviewsCount = Array.isArray(camper?.reviews)
-    ? camper.reviews.length
-    : 0;
+  const reviewsCount = Array.isArray(camper?.reviews) ? camper.reviews.length : 0;
 
   return (
     <div className={css.wrap}>
@@ -71,6 +70,7 @@ export default function CamperDetails({ camper }) {
 
       <p className={css.desc}>{camper?.description}</p>
 
+     
       <div className={css.tabs}>
         <button
           type="button"
@@ -93,6 +93,7 @@ export default function CamperDetails({ camper }) {
         <div>
           {tab === "features" && (
             <div className={css.card}>
+              {/* ряд бейджів */}
               <div className={css.badgesRow}>
                 <CamperBadges camper={camper} />
               </div>

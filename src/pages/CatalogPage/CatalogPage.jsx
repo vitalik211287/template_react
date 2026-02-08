@@ -27,7 +27,7 @@ export default function CatalogPage() {
 
   useEffect(() => {
     dispatch(fetchCampers({ filters, page: 1, limit: 4 }));
-  }, [dispatch]); // Search запускає новий запит окремо
+  }, [dispatch]); 
 
   return (
     <div className={css.grid}>

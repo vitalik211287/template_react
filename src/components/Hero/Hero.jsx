@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import css from "./Hero.module.css";
-import heroImg from "../../../public/Hero.jpg"; // або public
+import heroImg from "/Hero.jpg"; // або public
 
 export default function Hero() {
   return (
