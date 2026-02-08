@@ -86,8 +86,8 @@ export default function CamperCard({ camper }) {
           <Link
             className={css.more}
             to={`/catalog/${camper.id}`}
-            // target="_blank"
-            // rel="noreferrer"
+            target="_blank"
+            rel="noreferrer"
           >
             Show more
           </Link>
