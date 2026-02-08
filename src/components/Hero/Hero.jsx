@@ -18,7 +18,7 @@ export default function Hero() {
           </p>
 
           <Link className={css.btn} to="/catalog">
-            View catalog
+            View Now
           </Link>
         </div>
       </div>
