@@ -1,5 +1,5 @@
 export const CAMPER_FIELDS = {
-  transmission: {
+  automatic: {
     label: "Automatic",
     group: "equipment",
     asBadge: true,
@@ -144,7 +144,7 @@ export const CAMPER_FIELDS = {
 
 // Порядок, як у макеті/логіці (важливо, щоб UI був стабільний)
 export const EQUIPMENT_ORDER = [
-  "transmission",
+  "automatic",
   "engine",
   "kitchen",
   "AC",

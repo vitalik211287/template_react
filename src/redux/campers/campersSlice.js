@@ -19,7 +19,11 @@ const campersSlice = createSlice({
   initialState,
   reducers: {
     resetResults(state) {
-      state.page = 1;
+       state.items = [];     // ✅ важливо
+  state.page = 1;
+  // state.total = 0;      // якщо є в стейті
+  state.error = null;
+  // state.isLoading = false; // або status = "idle"
     },
     loadMore(state) {
       state.page += 1;
@@ -43,10 +47,18 @@ const campersSlice = createSlice({
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.loading = false;
 
-        // ✅ гарантуємо, що items завжди масив
         const payload = action.payload;
-        state.items = Array.isArray(payload) ? payload : (payload?.items ?? []);
+        const newItems = Array.isArray(payload)
+          ? payload
+          : (payload?.items ?? []);
+
+        if (state.page === 1) {
+          state.items = newItems; // ✅ новий пошук
+        } else {
+          state.items = [...state.items, ...newItems]; // ✅ load more
+        }
       })
+
       .addCase(fetchCampers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;

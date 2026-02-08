@@ -1,4 +1,3 @@
-// src/components/Filters/Filters.jsx
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLocation,
@@ -9,7 +8,7 @@ import {
 import { resetResults } from "../../redux/campers/campersSlice";
 import css from "./Filters.module.css";
 import { MdOutlineMap } from "react-icons/md";
-
+import { fetchCampers } from "../../redux/campers/campersOps";
 import {
   CAMPER_FIELDS,
   EQUIPMENT_ORDER,
@@ -22,7 +21,7 @@ const EQUIPMENT_TILES = EQUIPMENT_ORDER.map((key) => ({
   cfg: CAMPER_FIELDS[key],
 }))
   .filter(({ cfg }) => cfg?.group === "equipment")
-  // engine не робимо toggle, бо це строка (petrol/diesel/hybrid)
+ 
   .filter(({ key }) => key !== "engine")
   .map(({ key, cfg }) => ({
     key,
@@ -34,15 +33,18 @@ export default function Filters() {
   const dispatch = useDispatch();
   const filters = useSelector((s) => s.filters);
 
-  const onSearch = () => {
-    dispatch(resetResults()); // скидаємо page=1 (по ТЗ)
-    // якщо захочеш робити запит на бекенд з фільтрами — викличеш тут fetchCampers(filters)
-  };
+ const onSearch = () => {
+   dispatch(resetResults()); 
+   dispatch(fetchCampers()); 
+ };
 
-  const onReset = () => {
-    dispatch(resetFilters());
-    dispatch(resetResults());
-  };
+
+const onReset = () => {
+  dispatch(resetFilters());
+  dispatch(resetResults());
+  dispatch(fetchCampers()); 
+};
+
 
   return (
     <aside className={css.aside}>
