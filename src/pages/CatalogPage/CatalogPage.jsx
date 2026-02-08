@@ -6,15 +6,12 @@ import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import Loader from "../../components/Loader/Loader";
 import css from "./CatalogPage.module.css";
 
-
 import { fetchCampers } from "../../redux/campers/campersOps";
-import { loadMore } from "../../redux/campers/campersSlice";
 import {
   selectCampersLoading,
   selectCampersError,
   selectVisibleCampers,
   selectHasMore,
-
 } from "../../redux/campers/campersSelectors";
 
 export default function CatalogPage() {
@@ -25,11 +22,12 @@ export default function CatalogPage() {
   const campers = useSelector(selectVisibleCampers);
   const hasMore = useSelector(selectHasMore);
 
+  const filters = useSelector((s) => s.filters);
+  const page = useSelector((s) => s.campers.page);
 
   useEffect(() => {
-    dispatch(fetchCampers());
-  }, [dispatch]);
-
+    dispatch(fetchCampers({ filters, page: 1, limit: 4 }));
+  }, [dispatch]); // Search запускає новий запит окремо
 
   return (
     <div className={css.grid}>
@@ -43,7 +41,9 @@ export default function CatalogPage() {
 
         {hasMore && (
           <LoadMoreButton
-            onClick={() => dispatch(loadMore())}
+            onClick={() =>
+              dispatch(fetchCampers({ filters, page: page + 1, limit: 4 }))
+            }
             disabled={loading}
           />
         )}

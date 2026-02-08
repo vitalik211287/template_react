@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCamperById, fetchCampers } from "./campersOps";
+import { fetchCampers, fetchCamperById } from "./campersOps";
 
 const initialState = {
   items: [],
@@ -12,6 +12,8 @@ const initialState = {
   details: null,
   detailsLoading: false,
   detailsError: null,
+
+  hasMore: true, 
 };
 
 const campersSlice = createSlice({
@@ -19,17 +21,10 @@ const campersSlice = createSlice({
   initialState,
   reducers: {
     resetResults(state) {
-       state.items = [];     // ✅ важливо
-  state.page = 1;
-  // state.total = 0;      // якщо є в стейті
-  state.error = null;
-  // state.isLoading = false; // або status = "idle"
-    },
-    loadMore(state) {
-      state.page += 1;
-    },
-    setLimit(state, action) {
-      state.limit = action.payload;
+      state.items = [];
+      state.page = 1;
+      state.error = null;
+      state.hasMore = true;
     },
     clearDetails(state) {
       state.details = null;
@@ -39,7 +34,7 @@ const campersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetch all
+
       .addCase(fetchCampers.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -47,24 +42,25 @@ const campersSlice = createSlice({
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.loading = false;
 
-        const payload = action.payload;
-        const newItems = Array.isArray(payload)
-          ? payload
-          : (payload?.items ?? []);
+        const { items, page, limit } = action.payload;
 
-        if (state.page === 1) {
-          state.items = newItems; // ✅ новий пошук
-        } else {
-          state.items = [...state.items, ...newItems]; // ✅ load more
+        if (page === 1) state.items = items;
+        else state.items = [...state.items, ...items];
+
+        state.page = page;
+
+    
+        if (typeof limit === "number") {
+          state.hasMore = items.length === limit;
         }
       })
-
       .addCase(fetchCampers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || action.error.message;
+        state.error =
+          action.payload || action.error?.message || "Request failed";
       })
 
-      // fetch by id
+
       .addCase(fetchCamperById.pending, (state) => {
         state.detailsLoading = true;
         state.detailsError = null;
@@ -75,12 +71,11 @@ const campersSlice = createSlice({
       })
       .addCase(fetchCamperById.rejected, (state, action) => {
         state.detailsLoading = false;
-        state.detailsError = action.payload || action.error.message;
+        state.detailsError =
+          action.payload || action.error?.message || "Request failed";
       });
   },
 });
 
-export const { resetResults, loadMore, setLimit, clearDetails } =
-  campersSlice.actions;
-
+export const { resetResults, clearDetails } = campersSlice.actions;
 export default campersSlice.reducer;

@@ -13,7 +13,71 @@ export const selectDetailsError = (state) => state.campers.detailsError;
 
 export const selectFilters = (state) => state.filters;
 export const selectFavoriteIds = (state) => state.favorites.ids;
+export const selectHasMore = (state) => state.campers.hasMore;
+export const selectVisibleCampers = (state) => state.campers.items;
 
+
+export const selectCampersPage = (s) => s.campers.page;
+
+
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../api/axios";
+
+// helper: прибрати порожні значення
+const clean = (obj) =>
+  Object.fromEntries(
+    Object.entries(obj).filter(
+      ([, v]) => v !== "" && v !== null && v !== undefined,
+    ),
+  );
+
+export const fetchCampers = createAsyncThunk(
+  "campers/fetchAll",
+  async ({ filters, page = 1, limit = 4 }, thunkAPI) => {
+    try {
+      const params = clean({
+        page,
+        limit,
+
+        // якщо API підтримує — передаємо:
+        location: filters?.location?.trim(),
+        form: filters?.form || undefined,
+      });
+
+      const res = await api.get("/campers", { params });
+
+      const data = res.data;
+      const items = Array.isArray(data) ? data : (data?.items ?? []);
+
+      // Якщо хочеш: клієнтська фільтрація по equipment (безпечний варіант)
+      const equipment = filters?.equipment || {};
+      const activeEq = Object.entries(equipment)
+        .filter(([, val]) => val)
+        .map(([key]) => key);
+
+      const filtered =
+        activeEq.length === 0
+          ? items
+          : items.filter((c) => activeEq.every((k) => Boolean(c?.[k])));
+
+      return { items: filtered, page, limit };
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  },
+  
+);
+export const fetchCamperById = createAsyncThunk(
+  "campers/fetchById",
+  async (id, thunkAPI) => {
+    try {
+      const res = await api.get(`/campers/${id}`);
+      return res.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  },
+);
 // фільтрація по вимогах (location, form, features)
 export const selectFilteredCampers = createSelector(
   [selectCampers, selectFilters],
@@ -58,12 +122,12 @@ export const selectFilteredCampers = createSelector(
 );
 
 // пагінація (Load more) поверх відфільтрованих
-export const selectVisibleCampers = createSelector(
-  [selectFilteredCampers, selectPage, selectLimit],
-  (filtered, page, limit) => filtered.slice(0, page * limit),
-);
+// export const selectVisibleCampers = createSelector(
+//   [selectFilteredCampers, selectPage, selectLimit],
+//   (filtered, page, limit) => filtered.slice(0, page * limit),
+// );
 
-export const selectHasMore = createSelector(
-  [selectFilteredCampers, selectVisibleCampers],
-  (filtered, visible) => visible.length < filtered.length,
-);
+// export const selectHasMore = createSelector(
+//   [selectFilteredCampers, selectVisibleCampers],
+//   (filtered, visible) => visible.length < filtered.length,
+// );

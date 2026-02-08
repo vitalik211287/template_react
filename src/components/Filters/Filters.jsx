@@ -33,17 +33,28 @@ export default function Filters() {
   const dispatch = useDispatch();
   const filters = useSelector((s) => s.filters);
 
+ const LIMIT = 4;
+
  const onSearch = () => {
-   dispatch(resetResults()); 
-   dispatch(fetchCampers()); 
+   dispatch(resetResults());
+   dispatch(fetchCampers({ filters, page: 1, limit: LIMIT }));
  };
 
+ const onReset = () => {
+   dispatch(resetFilters());
+   dispatch(resetResults());
 
-const onReset = () => {
-  dispatch(resetFilters());
-  dispatch(resetResults());
-  dispatch(fetchCampers()); 
-};
+   // важливо: після resetFilters локальна змінна `filters` ще стара
+   // тому або передати порожні значення вручну:
+   dispatch(
+     fetchCampers({
+       filters: { location: "", form: "", features: {} },
+       page: 1,
+       limit: LIMIT,
+     }),
+   );
+ };
+
 
 
   return (
