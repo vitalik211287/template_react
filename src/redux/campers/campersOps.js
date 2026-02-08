@@ -6,12 +6,14 @@ export const fetchCampers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await api.get("/campers");
-      return res.data.items; // ✅ тільки масив
+      const data = res.data;
+      return Array.isArray(data) ? data : (data?.items ?? []);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   },
 );
+
 
 export const fetchCamperById = createAsyncThunk(
   "campers/fetchById",
